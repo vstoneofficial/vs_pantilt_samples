@@ -91,7 +91,7 @@ void PanTiltController::panTiltInit(){
 
   com.request.id        = 2;
   com.request.addr_name = "Position_P_Gain";
-  com.request.value     = 4000;
+  com.request.value     = 2000;
 
   while(!dynamixel_req.call(com)){
     ROS_ERROR("Failed to call service dynamixel_req");
