@@ -82,7 +82,7 @@ void PanTiltController::panTiltInit(){
 
   com.request.id        = 1;
   com.request.addr_name = "Position_P_Gain";
-  com.request.value     = 4000;
+  com.request.value     = 400;
 
   while(!dynamixel_req.call(com)){
     ROS_ERROR("Failed to call service dynamixel_req");
@@ -91,7 +91,7 @@ void PanTiltController::panTiltInit(){
 
   com.request.id        = 2;
   com.request.addr_name = "Position_P_Gain";
-  com.request.value     = 2000;
+  com.request.value     = 400;
 
   while(!dynamixel_req.call(com)){
     ROS_ERROR("Failed to call service dynamixel_req");
@@ -100,7 +100,7 @@ void PanTiltController::panTiltInit(){
 
   com.request.id        = 1;
   com.request.addr_name = "Position_I_Gain";
-  com.request.value     = 400;
+  com.request.value     = 10;
 
   while(!dynamixel_req.call(com)){
     ROS_ERROR("Failed to call service dynamixel_req");
@@ -109,7 +109,7 @@ void PanTiltController::panTiltInit(){
 
   com.request.id        = 2;
   com.request.addr_name = "Position_I_Gain";
-  com.request.value     = 400;
+  com.request.value     = 10;
 
   while(!dynamixel_req.call(com)){
     ROS_ERROR("Failed to call service dynamixel_req");
@@ -209,13 +209,13 @@ int main(int argc, char **argv){
 
   ros::NodeHandle nh;
 
-  ros::Rate loop_rate(5);
+  ros::Rate loop_rate(40);
 
   pan_tilt_controller.panTiltInit();
 
   double pan_rad = 0.0;		//パン方向の目標角度[rad]
   double tilt_rad = 0.0;	//チルト方向の目標角度[rad]
-  double delta_rad = 0.02;	//1周期ごとの角度変化量[rad]
+  double delta_rad = 0.004;	//1周期ごとの角度変化量[rad]
 
   while(nh.ok()){
 
@@ -228,7 +228,7 @@ int main(int argc, char **argv){
     pan_rad += delta_rad;
     tilt_rad += delta_rad;
 
-    pan_tilt_controller.sendGoalPos(pan_rad, tilt_rad, 0.1);
+    pan_tilt_controller.sendGoalPos(pan_rad, tilt_rad, 0.02);
     ros::spinOnce();
     loop_rate.sleep();
 
